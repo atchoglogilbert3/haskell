@@ -1,0 +1,123 @@
+
+module Main where
+
+-- FIX 1/8: Added imports
+-- ADDED: readMaybe for safe numeric parsing.
+-- ADDED: Centi for fixed two-decimal-place arithmetic.
+import Text.Read (readMaybe)
+import Data.Fixed (Centi)
+
+
+-- FIX 2/8: Money precision
+-- BEFORE: type Expense = (String, Double)
+-- PROBLEM: Double can introduce floating-point precision errors.
+-- FIXED: Replaced Double with Centi.
+type Expense = (String, Centi)
+
+
+-- FIX 3/8: Expense formatting
+-- BEFORE: formatExpense :: Expense -> Strirng
+-- PROBLEM: Strirng is not a valid Haskell type.
+-- FIXED: Use String.
+-- NOTE: The raw Main.hs above already uses String correctly.
+formatExpense :: Expense -> String
+formatExpense (name, amount) =
+  name ++ ": " ++ show amount ++ " EUR"
+
+
+-- FIX 4/8: Total calculation
+-- BEFORE: totalExpenses :: [Expense] -> Double
+-- PROBLEM: The total must use the same numeric type as Expense.
+-- FIXED: Changed the return type to Centi.
+totalExpenses :: [Expense] -> Centi
+totalExpenses [] = 0
+totalExpenses ((_, amount):rest) =
+  amount + totalExpenses rest
+
+
+-- FIX 5/8: Safe numeric parsing
+-- BEFORE: let amount = read input :: Double
+-- PROBLEM: Invalid numeric input crashes the application.
+-- ADDED: parseAmount using readMaybe.
+-- FIXED: Invalid input now returns Nothing instead of crashing.
+parseAmount :: String -> Maybe Centi
+parseAmount = readMaybe
+
+
+-- FIX 6/8: Expense validation
+-- BEFORE: Expenses were added without validation.
+-- PROBLEM: Empty names and negative amounts were accepted.
+-- ADDED: validExpense to check both conditions.
+-- ADDED: createExpense to combine parsing and validation.
+-- FIXED: Invalid expenses return Nothing.
+
+validExpense :: Expense -> Bool
+validExpense (name, amount) =
+  not (null name) && amount >= 0
+
+createExpense :: String -> String -> Maybe Expense
+createExpense name input =
+  case parseAmount input of
+    Just amount ->
+      let expense = (name, amount)
+      in if validExpense expense
+           then Just expense
+           else Nothing
+
+    Nothing ->
+      Nothing
+
+
+-- FIX 7/8: Interactive menu
+-- BEFORE: Invalid amounts could crash the application.
+-- FIXED: Replaced direct read with createExpense.
+-- ADDED: Separate branches for valid and invalid expenses.
+-- FIXED: Invalid input preserves the existing expense list.
+-- UNCHANGED: Listing expenses, showing totals, and exiting.
+
+runApp :: [Expense] -> IO ()
+runApp expenses = do
+  putStrLn "\n1. Add expense"
+  putStrLn "2. List expenses"
+  putStrLn "3. Show total"
+  putStrLn "4. Exit"
+
+  choice <- getLine
+
+  case choice of
+    "1" -> do
+      putStrLn "Expense name:"
+      name <- getLine
+
+      putStrLn "Amount:"
+      input <- getLine
+
+      case createExpense name input of
+        Just expense -> do
+          putStrLn "Expense added."
+          runApp (expenses ++ [expense])
+
+        Nothing -> do
+          putStrLn "Invalid expense."
+          runApp expenses
+
+    "2" -> do
+      mapM_ (putStrLn . formatExpense) expenses
+      runApp expenses
+
+    "3" -> do
+      putStrLn ("Total: " ++ show (totalExpenses expenses) ++ " EUR")
+      runApp expenses
+
+    "4" ->
+      putStrLn "Goodbye!"
+
+    _ -> do
+      putStrLn "Invalid choice."
+      runApp expenses
+
+
+-- FIX 8/8: Application entry point
+-- UNCHANGED: The application starts with an empty expense list.
+main :: IO ()
+main = runApp []
