@@ -1,504 +1,290 @@
 
-# Project 01 — Expense Tracker
+# Haskell Programming Roadmap
 
-## Project Description
+A progressive, project-based Haskell curriculum.
 
-Build a command-line expense management application using Haskell.
+## Learning Structure
 
-The application allows users to:
+Project → Chapters → Topics → Coding Assignments
 
-- Add expenses with a name and amount.
-- Store expenses in memory.
-- List recorded expenses.
-- Calculate total expenditure.
-- Navigate an interactive menu.
-- Exit the application.
+Each project:
+- Builds a complete, runnable application.
+- Introduces new programming chapters.
+- Reuses concepts from previous projects.
+- Progressively increases in complexity.
+- Includes concrete implementation tasks.
 
----
+## Project Roadmap
 
-# Module 01 — Programming Fundamentals
-
-**Module Objective:** Build a complete, standalone expense tracker using fundamental Haskell programming concepts.
-
-## Chapter 1 — Haskell Fundamentals
-
-### Topics
-
-- Modules
-- Basic data types
-- Type aliases
-- Functions
-- Type signatures
-- Function parameters
-- Function application
-- Tuples
-
-### Task 1 — Define an Expense
-
-#### 1. Concepts / Skills
-
-- Type aliases
-- Tuples
-- `String`
-- `Double`
-- Type declarations
-
-#### 2. Assignment
-
-1. Create a Haskell module named `Main`.
-2. Define an `Expense` type.
-3. Represent each expense as a tuple.
-4. Store the expense name as a `String`.
-5. Store the expense amount as a `Double`.
-
-#### 3. Code
-
-```haskell
-module Main where
-
-type Expense = (String, Double)
-```
-
-#### 4. Explanation
-
-- `module Main where` declares the module named `Main`.
-- `type` creates an alternative name for an existing type.
-- `Expense` is the new type alias.
-- `String` represents text.
-- `Double` represents floating-point numbers.
-- `(String, Double)` is a tuple containing two values.
-
-Example expense:
-
-```haskell
-("Food", 25.50)
-```
-
-The first element represents the expense name, and the second represents its amount.
+| # | Repository | Level | New Programming Chapters |
+|---|---|---|---|
+| 000 | `haskell-000-expense-tracker` | Beginner | Programming Basics; Data Types and Expressions; Conditional Statements; Functions; Collections; Recursion; Console Input and Output |
+| 001 | `haskell-001-student-management` | Beginner+ | Algebraic Data Types; Records and Data Modeling; Pattern Matching; Type Classes |
+| 002 | `haskell-002-text-analyzer` | Intermediate | Higher-Order Programming; Functional Composition; Functional Abstraction; Advanced List Processing |
+| 003 | `haskell-003-banking-system` | Intermediate+ | Error Handling; Data Validation; State Management; Domain Modeling |
+| 004 | `haskell-004-file-manager` | Advanced | File I/O; Directories and Paths; Exception Handling; Resource Management |
+| 005 | `haskell-005-task-scheduler` | Advanced+ | Date and Time; Concurrent Programming; Asynchronous Operations; Scheduling |
+| 006 | `haskell-006-database-app` | Advanced+ | Database Programming; SQL Integration; Persistent Data; Transactions |
+| 007 | `haskell-007-rest-api` | Professional | HTTP Programming; JSON Serialization; Web Services; API Architecture |
+| 008 | `haskell-008-chat-server` | Professional+ | Network Programming; Sockets; Concurrent Clients; Communication Protocols |
+| 009 | `haskell-009-compiler` | Expert | Lexical Analysis; Parsing; Abstract Syntax Trees; Interpretation; Language Processing |
 
 ---
 
-### Task 2 — Format an Expense
+## Project 000 — Expense Tracker
 
-#### 1. Concepts / Skills
+**Repository:** `haskell-000-expense-tracker`
 
-- Function declarations
-- Type signatures
-- Function parameters
-- Function application
-- Tuple pattern matching
-- String concatenation
-- Type conversion
+### Goal
+Build a console application for recording, listing,
+and calculating personal expenses.
 
-#### 2. Assignment
+### Chapters
+1. Programming Basics
+2. Data Types and Expressions
+3. Conditional Statements
+4. Functions
+5. Collections
+6. Recursion
+7. Console Input and Output
 
-1. Create a function named `formatExpense`.
-2. Accept an `Expense` as input.
-3. Extract the expense name and amount.
-4. Convert the numeric amount into text.
-5. Return a formatted string containing the expense name, amount, and currency.
-
-#### 3. Code
-
-Add the following code below the `Expense` type:
-
-```haskell
-formatExpense :: Expense -> String
-formatExpense (name, amount) =
-  name ++ ": " ++ show amount ++ " EUR"
-```
-
-#### 4. Explanation
-
-- `formatExpense` is the function name.
-- `::` introduces the function's type signature.
-- `Expense -> String` means the function accepts an `Expense` and returns a `String`.
-- `(name, amount)` extracts both elements from the expense tuple.
-- `name` receives the first element.
-- `amount` receives the second element.
-- `=` separates the function declaration from its implementation.
-- `++` concatenates strings.
-- `show` converts the numeric amount into a string.
-
-Example:
-
-```haskell
-formatExpense ("Food", 25.50)
-```
-
-Result:
-
-```text
-Food: 25.5 EUR
-```
+### Features
+- Add expenses
+- List expenses
+- Calculate total expenses
+- Navigate an interactive menu
+- Exit the application
 
 ---
 
-## Chapter 2 — Data Structures
+## Project 001 — Student Management System
 
-### Topics
+**Repository:** `haskell-001-student-management`
 
-- Lists
-- List construction
-- List concatenation
-- List traversal
-- Higher-order functions
-- Function composition
+### Goal
+Build an application for managing students,
+courses, grades, and academic results.
 
-### Task 3 — Display Expenses
+### New Chapters
+1. Algebraic Data Types
+2. Records and Data Modeling
+3. Pattern Matching
+4. Type Classes
 
-#### 1. Concepts / Skills
-
-- Lists
-- List type signatures
-- Higher-order functions
-- `mapM_`
-- `putStrLn`
-- Function composition
-- IO actions
-
-#### 2. Assignment
-
-1. Create a function named `displayExpenses`.
-2. Accept a list of expenses.
-3. Iterate through the list.
-4. Format each expense using `formatExpense`.
-5. Print every formatted expense to the terminal.
-
-#### 3. Code
-
-Add the following function:
-
-```haskell
-displayExpenses :: [Expense] -> IO ()
-displayExpenses expenses =
-  mapM_ (putStrLn . formatExpense) expenses
-```
-
-#### 4. Explanation
-
-- `[Expense]` represents a list of expenses.
-- `IO ()` represents an IO action that returns no meaningful value.
-- `expenses` is the function parameter containing the list.
-- `mapM_` executes an IO action for each element of a list.
-- `putStrLn` prints text to the terminal.
-- `.` is the function composition operator.
-- `(putStrLn . formatExpense)` first formats an expense and then prints it.
-
-Example list:
-
-```haskell
-expenses =
-  [ ("Food", 25.50)
-  , ("Transport", 12.00)
-  ]
-```
-
-Calling:
-
-```haskell
-displayExpenses expenses
-```
-
-prints each expense on a separate line.
+### Features
+- Register students
+- Assign courses
+- Record grades
+- Calculate averages
+- Determine pass/fail status
+- Generate academic reports
 
 ---
 
-## Chapter 3 — Functional Programming
+## Project 002 — Text Analyzer
 
-### Topics
+**Repository:** `haskell-002-text-analyzer`
 
-- Pure functions
-- Recursion
-- Base cases
-- Recursive list processing
-- Pattern matching
-- Immutable data
+### Goal
+Build a text-processing application that analyzes
+documents and generates statistics.
 
-### Task 4 — Calculate Total Expenses
+### New Chapters
+1. Higher-Order Programming
+2. Functional Composition
+3. Functional Abstraction
+4. Advanced List Processing
 
-#### 1. Concepts / Skills
-
-- Recursive functions
-- Base cases
-- List pattern matching
-- Tuple pattern matching
-- Wildcard patterns
-- Arithmetic operations
-- Pure functions
-
-#### 2. Assignment
-
-1. Create a function named `totalExpenses`.
-2. Accept a list of expenses.
-3. Return zero when the list is empty.
-4. Extract the amount from the first expense.
-5. Recursively calculate the total of the remaining expenses.
-6. Return the sum of all amounts.
-
-#### 3. Code
-
-Add the following function:
-
-```haskell
-totalExpenses :: [Expense] -> Double
-totalExpenses [] = 0
-totalExpenses ((_, amount):rest) =
-  amount + totalExpenses rest
-```
-
-#### 4. Explanation
-
-- `totalExpenses` is a recursive function.
-- `[Expense] -> Double` means it accepts a list and returns a number.
-- `[]` represents an empty list.
-- `totalExpenses [] = 0` defines the base case.
-- `(_, amount)` extracts an expense tuple.
-- `_` ignores the expense name.
-- `amount` captures the numeric amount.
-- `:` separates the first element from the remaining list.
-- `rest` represents the remaining expenses.
-- `totalExpenses rest` recursively processes the remaining list.
-
-Example:
-
-```haskell
-totalExpenses
-  [ ("Food", 25.50)
-  , ("Transport", 12.00)
-  ]
-```
-
-Calculation:
-
-```text
-25.50 + 12.00 + 0 = 37.50
-```
-
-The function is pure because it calculates a result without performing IO or modifying external state.
+### Features
+- Count words and characters
+- Calculate word frequencies
+- Find common words
+- Filter and transform text
+- Generate text statistics
 
 ---
 
-## Chapter 4 — Input and Output
+## Project 003 — Banking System
 
-### Topics
+**Repository:** `haskell-003-banking-system`
 
-- IO actions
-- `IO` type
-- `do` notation
-- Standard input
-- Standard output
-- String-to-number conversion
+### Goal
+Build a banking application with accounts,
+transactions, and balance management.
 
-## Chapter 5 — Control Flow
+### New Chapters
+1. Error Handling
+2. Data Validation
+3. State Management
+4. Domain Modeling
 
-### Topics
-
-- `case` expressions
-- Pattern-based branching
-- Wildcard patterns
-- Recursive application loops
-- Immutable application state
-- Program entry points
-
-### Task 5 — Build the Interactive Application
-
-#### 1. Concepts / Skills
-
-- `IO`
-- `do` notation
-- `getLine`
-- `putStrLn`
-- `read`
-- `show`
-- `let` bindings
-- `case` expressions
-- Recursive application loops
-- Immutable state management
-- `main`
-
-#### 2. Assignment
-
-1. Create a function named `runApp`.
-2. Accept the current list of expenses.
-3. Display a menu containing four options.
-4. Read the user's menu selection.
-5. Implement the Add Expense operation.
-6. Read the expense name and amount.
-7. Convert the entered amount into a `Double`.
-8. Add the expense to the list.
-9. Implement the List Expenses operation using `displayExpenses`.
-10. Implement the Show Total operation using `totalExpenses`.
-11. Redisplay the menu after each completed operation.
-12. Handle invalid menu selections.
-13. Implement the Exit operation.
-14. Create `main` to start the application with an empty list.
-
-#### 3. Code
-
-Add the following code below the existing functions:
-
-```haskell
-runApp :: [Expense] -> IO ()
-runApp expenses = do
-  putStrLn "\n1. Add expense"
-  putStrLn "2. List expenses"
-  putStrLn "3. Show total"
-  putStrLn "4. Exit"
-
-  choice <- getLine
-
-  case choice of
-    "1" -> do
-      putStrLn "Expense name:"
-      name <- getLine
-
-      putStrLn "Amount:"
-      input <- getLine
-
-      let amount = read input :: Double
-      runApp (expenses ++ [(name, amount)])
-
-    "2" -> do
-      displayExpenses expenses
-      runApp expenses
-
-    "3" -> do
-      putStrLn (show (totalExpenses expenses))
-      runApp expenses
-
-    "4" -> do
-      putStrLn "Goodbye!"
-
-    _ -> do
-      putStrLn "Invalid choice"
-      runApp expenses
-
-main :: IO ()
-main = runApp []
-```
-
-#### 4. Explanation
-
-**Function declaration**
-
-```haskell
-runApp :: [Expense] -> IO ()
-```
-
-- `runApp` accepts a list of expenses.
-- `[Expense]` represents the current application data.
-- `IO ()` indicates that the function performs IO actions.
-
-**Do notation**
-
-```haskell
-runApp expenses = do
-```
-
-- `expenses` is the function parameter.
-- `=` defines the function implementation.
-- `do` allows multiple IO actions to execute sequentially.
-
-**Reading input**
-
-```haskell
-choice <- getLine
-```
-
-- `getLine` reads a line of text from the terminal.
-- `<-` binds the result of an IO action to a variable.
-- `choice` contains the user's selection.
-
-**Conditional branching**
-
-```haskell
-case choice of
-```
-
-- `case` examines the value of `choice`.
-- Each branch handles a possible menu selection.
-- `->` separates a matching pattern from its action.
-
-**Converting input**
-
-```haskell
-let amount = read input :: Double
-```
-
-- `let` creates a local binding.
-- `read` converts the input string into a numeric value.
-- `:: Double` specifies the expected numeric type.
-
-Note: `read` can cause a runtime error if the input is not a valid number. Input validation can be introduced in a later module.
-
-**Adding expenses**
-
-```haskell
-runApp (expenses ++ [(name, amount)])
-```
-
-- `(name, amount)` creates a new expense tuple.
-- `[(name, amount)]` creates a list containing that expense.
-- `++` concatenates the existing list with the new list.
-- `runApp` receives the updated list.
-
-**Displaying expenses**
-
-```haskell
-displayExpenses expenses
-runApp expenses
-```
-
-- `displayExpenses` prints the current expenses.
-- `runApp expenses` displays the menu again.
-
-**Calculating the total**
-
-```haskell
-putStrLn (show (totalExpenses expenses))
-```
-
-- `totalExpenses expenses` calculates the sum.
-- `show` converts the result into a string.
-- `putStrLn` prints the string.
-
-**Application loop**
-
-```haskell
-runApp expenses
-```
-
-Calling `runApp` again creates a recursive application loop.
-
-The current expense list is passed into the next function call.
-
-**Application entry point**
-
-```haskell
-main :: IO ()
-main = runApp []
-```
-
-- `main` is the executable's entry point.
-- `IO ()` indicates that the program performs IO actions.
-- `runApp []` starts the application with an empty expense list.
+### Features
+- Create bank accounts
+- Deposit money
+- Withdraw money
+- Transfer funds
+- Validate transactions
+- Track account balances
+- Handle invalid operations
 
 ---
 
-## Module 01 — Completion Checklist
+## Project 004 — File Manager
 
-- [ ] Task 1 — Define an Expense
-- [ ] Task 2 — Format an Expense
-- [ ] Task 3 — Display Expenses
-- [ ] Task 4 — Calculate Total Expenses
-- [ ] Task 5 — Build the Interactive Application
+**Repository:** `haskell-004-file-manager`
 
-## Final Functional Requirements
+### Goal
+Build a command-line file management application.
 
-- [ ] Users can add expenses.
-- [ ] Users can list recorded expenses.
-- [ ] Users can calculate total expenditure.
-- [ ] Users can navigate the interactive menu.
-- [ ] Users can exit the application.
-- [ ] The application runs independently as a command-line program.
+### New Chapters
+1. File Input and Output
+2. Directories and Paths
+3. Exception Handling
+4. Resource Management
+
+### Features
+- Create files
+- Read files
+- Update file contents
+- Rename files
+- Delete files
+- Browse directories
+- Handle filesystem errors
+
+---
+
+## Project 005 — Task Scheduler
+
+**Repository:** `haskell-005-task-scheduler`
+
+### Goal
+Build an application that schedules and executes
+tasks based on time and priority.
+
+### New Chapters
+1. Date and Time
+2. Concurrent Programming
+3. Asynchronous Operations
+4. Scheduling
+
+### Features
+- Create scheduled tasks
+- Assign deadlines
+- Set task priorities
+- Execute tasks concurrently
+- Track task execution
+- Cancel pending tasks
+
+---
+
+## Project 006 — Database Application
+
+**Repository:** `haskell-006-database-app`
+
+### Goal
+Build a persistent application backed by
+a relational database.
+
+### New Chapters
+1. Database Programming
+2. SQL Integration
+3. Persistent Data
+4. Transactions
+
+### Features
+- Connect to a database
+- Create database tables
+- Insert records
+- Query records
+- Update records
+- Delete records
+- Execute transactions
+
+---
+
+## Project 007 — REST API
+
+**Repository:** `haskell-007-rest-api`
+
+### Goal
+Build an HTTP-based backend service.
+
+### New Chapters
+1. HTTP Programming
+2. JSON Serialization
+3. Web Services
+4. API Architecture
+
+### Features
+- Start an HTTP server
+- Define API routes
+- Process HTTP requests
+- Return JSON responses
+- Implement CRUD endpoints
+- Validate request data
+- Connect to a database
+
+---
+
+## Project 008 — Chat Server
+
+**Repository:** `haskell-008-chat-server`
+
+### Goal
+Build a networked chat application supporting
+multiple connected users.
+
+### New Chapters
+1. Network Programming
+2. Socket Programming
+3. Concurrent Clients
+4. Communication Protocols
+
+### Features
+- Start a chat server
+- Accept client connections
+- Send and receive messages
+- Broadcast messages
+- Handle multiple users
+- Manage disconnections
+
+---
+
+## Project 009 — Compiler
+
+**Repository:** `haskell-009-compiler`
+
+### Goal
+Build a compiler or interpreter for a small
+custom programming language.
+
+### New Chapters
+1. Lexical Analysis
+2. Parsing
+3. Abstract Syntax Trees
+4. Interpretation
+5. Language Processing
+
+### Features
+- Define a programming language
+- Tokenize source code
+- Parse expressions
+- Build abstract syntax trees
+- Validate syntax
+- Evaluate expressions
+- Report language errors
+
+---
+
+## Progress Tracking
+
+- [ ] Project 000 — Expense Tracker
+- [ ] Project 001 — Student Management System
+- [ ] Project 002 — Text Analyzer
+- [ ] Project 003 — Banking System
+- [ ] Project 004 — File Manager
+- [ ] Project 005 — Task Scheduler
+- [ ] Project 006 — Database Application
+- [ ] Project 007 — REST API
+- [ ] Project 008 — Chat Server
+- [ ] Project 009 — Compiler
